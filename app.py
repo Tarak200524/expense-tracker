@@ -6,7 +6,7 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 app.secret_key = os.environ.get("SECRET_KEY")
 
 def db():
-    return psycopg2.connect(DATABASE_URL, sslmode="require")
+    return psycopg2.connect(DATABASE_URL)
 
 @app.route("/")
 def home():
