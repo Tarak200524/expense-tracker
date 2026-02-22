@@ -1,10 +1,9 @@
 from flask import Flask, render_template, request, redirect, session, url_for, jsonify
 import psycopg2
-
+import os
 app = Flask(__name__)
-app.secret_key = "123456"
-
-DATABASE_URL = "postgresql://postgres:Bcth2uqGY1QAZ8iI@db.yibgjcfstlemfabftisx.supabase.co:5432/postgres"
+DATABASE_URL = os.environ.get("DATABASE_URL")
+app.secret_key = os.environ.get("SECRET_KEY")
 
 def db():
     return psycopg2.connect(DATABASE_URL, sslmode="require")
