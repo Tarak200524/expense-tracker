@@ -95,6 +95,7 @@ def dashboard():
     return render_template("dashboard.html")
 
 # ---------------- DATA API ----------------
+# ---------------- DATA API ----------------
 @app.route("/expenses-data")
 def expenses_data():
     if "username" not in session:
@@ -103,15 +104,16 @@ def expenses_data():
     conn = db()
     cur = conn.cursor()
 
-cur.execute("""
-    SELECT category, SUM(amount)
-    FROM expenses
-    WHERE name=%s
-    AND DATE_TRUNC('month', date) = DATE_TRUNC('month', CURRENT_DATE)
-    GROUP BY category
-""", (session["username"],))
+    cur.execute("""
+        SELECT category, SUM(amount)
+        FROM expenses
+        WHERE name=%s
+        AND DATE_TRUNC('month', date) = DATE_TRUNC('month', CURRENT_DATE)
+        GROUP BY category
+    """, (session["username"],))
 
     data = cur.fetchall()
+
     cur.close()
     conn.close()
 
