@@ -103,12 +103,13 @@ def expenses_data():
     conn = db()
     cur = conn.cursor()
 
-    cur.execute("""
-        SELECT category, SUM(amount)
-        FROM expenses
-        WHERE name=%s
-        GROUP BY category
-    """, (session["username"],))
+cur.execute("""
+    SELECT category, SUM(amount)
+    FROM expenses
+    WHERE name=%s
+    AND DATE_TRUNC('month', date) = DATE_TRUNC('month', CURRENT_DATE)
+    GROUP BY category
+""", (session["username"],))
 
     data = cur.fetchall()
     cur.close()
